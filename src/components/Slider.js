@@ -4,11 +4,10 @@ import Slider from 'react-slick';
 export const sliderSettings = {
     arrows: true,
     dots: false,
-    infinite: true,
-    speed: 505,
-    slideToShow: 1,
-    slideToScroll: 1,
-    slickGoTo: 10
+    infinite: false,
+    speed: 500,
+    slideToShow: 2,
+    slideToScroll: 2
 }
 
 export const generateSlides = ({slides}) => {
@@ -20,7 +19,7 @@ export const generateSlides = ({slides}) => {
                     slides.list.map((item) => {
                         // console.log(item);
                         return (
-                            <div key={item.id}>
+                            <div key={item.id} data-index={item.id}>
                                 <div className='slider-items' style={{ background: `url('https://picsum.photos/1080/720/?image=${item.imageid}') no-repeat`}}>
                                     <div className='caption'>
                                         <h5>{item.author}</h5>

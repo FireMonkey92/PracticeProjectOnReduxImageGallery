@@ -1,3 +1,6 @@
+/*=============================================
+                  bascic settings CSS
+==============================================*/
 body {
   margin: 0;
   padding: 0;
@@ -9,22 +12,62 @@ body {
     -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/*=============================================
+                Navigation Bar  CSS
+==============================================*/
 .navbar .navbar-brand{
   color: aliceblue !important;
   font-size: 25px;
   font-weight: 400;
 }
 
+/*=============================================
+                Image Container CSS
+==============================================*/
+
 .image_cotainer .image_items{
   margin: 0px;
+  /* position: relative; */
 }
 
 .image_cotainer .image_items img{
   cursor: pointer;
-
 }
 
+.image_cotainer .image_items .bottomBar{
+  padding: 5px; 
+  position: relative;
+  font-style: normal;
+  display: flex;
+}
+
+.image_cotainer .image_items .bottomBar .like{
+  text-align: left;
+  /* padding: 10px; */
+  flex-grow: 1;
+  margin-right: 100px;
+  cursor: pointer;
+}
+.image_cotainer .image_items .bottomBar .like i{
+  color: rgb(238, 93, 93);
+}
+.image_cotainer .image_items .bottomBar .dislike i{
+  color: rgb(53, 51, 68);
+}
+.image_cotainer .image_items .bottomBar .like i, .image_cotainer .image_items .bottomBar .dislike i{
+  margin-right: 10px;
+ 
+}
+.image_cotainer .image_items .bottomBar .dislike{
+  flex-grow: 1;
+  text-align: right; 
+  cursor: pointer;
+}
+
+
+/*=============================================
+                Image slider + modal CSS 
+==============================================*/
 .slider-items {
   height: 450px;
   background-size: cover !important;
@@ -36,17 +79,14 @@ body {
   border: none;
 }
 
-
 .modal  .modal-content .modal-header{
   border-bottom: none !important;
  
 }
-
 .modal .modal-content,
 {
   border: none;
 }
-
 .close:not(:disabled):not(.disabled) {
   cursor: pointer;
   /* color: white; */
