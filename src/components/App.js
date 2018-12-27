@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import NavigationBar from './navBar'
 import ImageGalery from '../containers/imagegalery'
@@ -6,10 +7,15 @@ import ImageGalery from '../containers/imagegalery'
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <NavigationBar/>
-        <ImageGalery/>
-      </div>
+      <BrowserRouter>
+        <div>
+          <Route  path='/' component={NavigationBar}></Route>
+          <Route  path='/gallery' component={ImageGalery}></Route>
+          <div className="App">
+            
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
