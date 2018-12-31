@@ -185,7 +185,7 @@ button.close {
 
 
 .react-reveal.modal.bd-example-modal-lg.show{
-  animation-delay: 550ms !important;
+  animation-delay: 600ms !important;
 }
 /* Setting bootstrap modal bg darker */
 .modal-backdrop
@@ -193,3 +193,14 @@ button.close {
     opacity: .9 !important;
 }
 
+.modal {
+  overflow-y: auto;
+}
+
+.slider-items2 {
+  height: 100px;
+  background-size: cover !important;
+  background-position: center center !important;
+  position: relative;
+  width: 100%;
+}

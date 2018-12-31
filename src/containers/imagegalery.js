@@ -16,8 +16,8 @@ import NavigationBar from '../components/navBar'
 
 // const imageLink = 'https://picsum.photos/g/300/200/?image='
 // const API300x200 = 'http://www.json-generator.com/api/json/get/cgcnszmdbC?indent=2';
-const local = 'http://localhost:3004/imageIndexs';
-// const github = 'https://my-json-server.typicode.com/FireMonkey92/PracticeProjectOnReduxImageGallery/imageIndexs';
+// const local = 'http://localhost:3004/imageIndexs';
+const github = 'https://my-json-server.typicode.com/FireMonkey92/PracticeProjectOnReduxImageGallery/imageIndexs';
 
 
 
@@ -39,7 +39,7 @@ class ImageGalery extends Component {
         //debugger
         // console.log('perfoming likes ' + likes + " on id=  " + index);
         if (likes >= 0) {
-            fetch(`${local}/${index}`, {
+            fetch(`${github}/${index}`, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
@@ -55,7 +55,7 @@ class ImageGalery extends Component {
 
     doDisLike = (dislikes, index) => {
         // console.log('perfoming dislikes ' + dislikes + " on id= " + index);
-        fetch(`${local}/${index}`, {
+        fetch(`${github}/${index}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -102,7 +102,8 @@ class ImageGalery extends Component {
             infinite: true,
             // fade: true,
             swipeToSlide: true,
-            speed: 500,
+            speed: 600,
+            cssEase: 'linear',
             slidesToShow: 1,
             slidesToScroll: 1,
             beforeChange: (current, next) => this.setState({ slideIndex: next })
@@ -117,7 +118,6 @@ class ImageGalery extends Component {
                                     <div key={item.id} data-index={item.id}>
                                         <div className='slider-items' style={{ background: `url('https://picsum.photos/1080/720/?image=${item.imageid}') no-repeat` }}>
                                             <div className='caption'>
-
                                                 <div className='topBar'>
                                                     <div className='like'>
                                                         <i className="fas fa-heart"></i>{item.likes}
