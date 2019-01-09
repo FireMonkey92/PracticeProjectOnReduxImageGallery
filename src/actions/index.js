@@ -7,11 +7,11 @@
 // const API300x200 = 'http://www.json-generator.com/api/json/get/cgcnszmdbC?indent=2';
 const github = 'https://my-json-server.typicode.com/FireMonkey92/PracticeProjectOnReduxImageGallery/imageIndexs';
 
-// const local  = 'http://localhost:3004/imageIndexs';
+// const local = 'http://localhost:3004/imageIndexs';
 
 export function getImages() {
     //do a network call
-    
+
     const request = fetch(github, {
         method: 'GET'
     }).then(res => res.json());
@@ -24,7 +24,7 @@ export function getImages() {
     }
 }
 
-export function sortByLikeAsc(){
+export function sortByLikeAsc() {
     const request = fetch(`${github}?_sort=likes&_order=asc`, {
         method: 'GET'
     }).then(res => res.json());
@@ -37,7 +37,7 @@ export function sortByLikeAsc(){
     }
 }
 
-export function sortByLikeDesc(){
+export function sortByLikeDesc() {
     const request = fetch(`${github}?_sort=likes&_order=desc`, {
         method: 'GET'
     }).then(res => res.json());
@@ -50,7 +50,7 @@ export function sortByLikeDesc(){
     }
 }
 
-export function sortByDisLikeAsc(){
+export function sortByDisLikeAsc() {
     const request = fetch(`${github}?_sort=dislikes&_order=asc`, {
         method: 'GET'
     }).then(res => res.json());
@@ -63,7 +63,7 @@ export function sortByDisLikeAsc(){
     }
 }
 
-export function sortByDisLikeDesc(){
+export function sortByDisLikeDesc() {
     const request = fetch(`${github}?_sort=dislikes&_order=desc`, {
         method: 'GET'
     }).then(res => res.json());

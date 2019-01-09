@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getImages } from '../actions'
+import { getImages, sortByLikeAsc, sortByLikeDesc, sortByDisLikeAsc, sortByDisLikeDesc } from '../actions';
+
+
+
 import Slider from 'react-slick'
 
 import Reveal from 'react-reveal';
 import Zoom from 'react-reveal/Zoom';
 import RubberBand from 'react-reveal/RubberBand';
 import 'animate.css/animate.css';
-
-import SortingDropDown from './sortingImages';
-import NavigationBar from '../components/navBar'
-
-
+ 
 // const imageLink = 'https://picsum.photos/g/300/200/?image='
 // const API300x200 = 'http://www.json-generator.com/api/json/get/cgcnszmdbC?indent=2';
-// const local = 'http://localhost:3004/imageIndexs';
+const local = 'http://localhost:3004/imageIndexs';
 const github = 'https://my-json-server.typicode.com/FireMonkey92/PracticeProjectOnReduxImageGallery/imageIndexs';
 
 
@@ -27,34 +26,51 @@ class ImageGalery extends Component {
         super(props);
         this.state = {
             slideIndex: 0,
-            updateCount: 0
+            updateCount: 0,
+            sortingIndex: 0
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getImages();
     }
 
-    doLike = (likes, index) => {
-        //debugger
-        // console.log('perfoming likes ' + likes + " on id=  " + index);
-        if (likes >= 0) {
-            fetch(`${github}/${index}`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({ likes: likes + 1 })
-            }).then(() => {
-                this.props.getImages();
-                // console.log('Like Succeess..!!!')
-            })
-        }
+
+    doLike = (likes, index, sortIndex) => {
+
+
+        fetch(`${github}/${index}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ likes: likes + 1 })
+        }).then(res => res.json()).then(
+            () => {
+                if (sortIndex === 0) {
+                    this.props.getImages();
+                }
+                if (sortIndex === 1) {
+                    this.props.sortByLikeAsc();
+                }
+                if (sortIndex === 2) {
+                    this.props.sortByLikeDesc();
+                }
+                if (sortIndex === 3) {
+                    this.props.sortByDisLikeAsc();
+                }
+                if (sortIndex === 4) {
+                    this.props.sortByDisLikeDesc();
+                }
+            }
+        );
+
+
     }
 
-    doDisLike = (dislikes, index) => {
-        // console.log('perfoming dislikes ' + dislikes + " on id= " + index);
+    doDisLike = (dislikes, index, sortIndex) => {
+
         fetch(`${github}/${index}`, {
             method: 'PATCH',
             headers: {
@@ -62,14 +78,27 @@ class ImageGalery extends Component {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({ dislikes: dislikes + 1 })
-        }).then(() => {
-
-
-            this.props.getImages();
-            // console.log('DisLike Succeess..!!!')
-        })
-
+        }).then(res => res.json()).then(
+            () => {
+                if (sortIndex === 0) {
+                    this.props.getImages();
+                }
+                if (sortIndex === 1) {
+                    this.props.sortByLikeAsc();
+                }
+                if (sortIndex === 2) {
+                    this.props.sortByLikeDesc();
+                }
+                if (sortIndex === 3) {
+                    this.props.sortByDisLikeAsc();
+                }
+                if (sortIndex === 4) {
+                    this.props.sortByDisLikeDesc();
+                }
+            }
+        );
     }
+
 
     renderImages = ({ list }) => {
         if (list) {
@@ -78,11 +107,19 @@ class ImageGalery extends Component {
                     <Reveal effect='animated fadeIn' key={item.id}>
                         <div className="image_items col-lg-3 col-md-4 col-sm-6">
                             <div className="d-block mb-4 h-100">
-                                <img data-toggle="modal" data-target=".bd-example-modal-lg" onClick={e => this.slider.slickGoTo(index)} className="img-fluid img-thumbnail" src={`${item.image}${item.imageid}`} alt='Not Found' />
+                                <img data-toggle="modal" data-target=".bd-example-modal-lg" onClick={e => { this.slider.slickGoTo(index);
+                                                                                                                                                                                              
+                                }} className="img-fluid img-thumbnail" src={`${item.image}${item.imageid}`} alt='Not Found' />
                                 <div className='bottomBar'>
-                                    <div className='like' onClick={() => this.doLike(item.likes, item.id)}>
+                                    <div className='like' onClick={() => {
+                                        const sortIndex = this.state.sortingIndex;
+                                        this.doLike(item.likes, item.id, sortIndex)
+                                    }}>
                                         <RubberBand><i className="fas fa-heart"></i></RubberBand>{item.likes}
-                                    </div><div className='dislike' onClick={() => this.doDisLike(item.dislikes, item.id)}>
+                                    </div><div className='dislike' onClick={() => {
+                                        const sortIndex = this.state.sortingIndex;
+                                        this.doDisLike(item.dislikes, item.id, sortIndex)
+                                    }}>
                                         <RubberBand><i className="fas fa-thumbs-down"></i></RubberBand>{item.dislikes}
                                     </div>
                                 </div>
@@ -163,7 +200,40 @@ class ImageGalery extends Component {
                     </div>
                     <h1 className="my-4 text-center">Thumbnail Gallery</h1>
                     <hr />
-                    <SortingDropDown />
+                    <div className='sortingBar'>
+                        <div className="btn-group">
+                            <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sort Images
+                            </button>
+                            <div className="dropdown-menu">
+                                <div className="dropdown-item" onClick={() => {
+                                    this.setState({
+                                        sortingIndex: 1
+                                    });
+                                    this.props.sortByLikeAsc();
+                                }}>Ascending by Likes</div>
+                                <div className="dropdown-item" onClick={() => {
+                                    this.setState({
+                                        sortingIndex: 2
+                                    })
+                                    this.props.sortByLikeDesc()
+                                }} >Descending by Likes</div>
+                                <div className="dropdown-divider"></div>
+                                <div className="dropdown-item" onClick={() => {
+                                    this.setState({
+                                        sortingIndex: 3
+                                    })
+                                    this.props.sortByDisLikeAsc()
+                                }} >Ascending by Dislikes</div>
+                                <div className="dropdown-item" onClick={() => {
+                                    this.setState({
+                                        sortingIndex: 4
+                                    });
+                                    this.props.sortByDisLikeDesc()
+                                }} >Descending by Dislikes</div>
+                            </div>
+                        </div>
+                    </div>
                     <hr />
                     <div className="image_cotainer row text-center">
                         {this.renderImages(this.props.images)}
@@ -181,6 +251,6 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators({ getImages }, dispatch);
+    return bindActionCreators({ getImages, sortByLikeAsc, sortByLikeDesc, sortByDisLikeAsc, sortByDisLikeDesc }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ImageGalery);
