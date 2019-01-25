@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { getImages, sortByLikeAsc, sortByLikeDesc, sortByDisLikeAsc, sortByDisLikeDesc } from '../actions';
-
-
 
 import Slider from 'react-slick'
 

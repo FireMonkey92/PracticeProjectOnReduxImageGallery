@@ -16,11 +16,16 @@ const NavigationBAr = () => {
                         <li className="nav-item">
                             <Link className='nav-link' to='/slider'>Image Slider</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className='nav-link' to='/service'>Services</Link>
+                        <li className="nav-item dropdown"  >
+                            <div className="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+                                Services
+                                     </div>
+                            <div className="dropdown-menu">
+                                <Link className="dropdown-item" to='/weather'>Weather Forcast</Link>
+                            </div>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to='/contact'>Contact</Link>
+                            <Link className='nav-link' to='/login'>Login/Register</Link>
                         </li>
                     </ul>
                 </div>

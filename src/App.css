@@ -238,3 +238,8 @@ button.close {
   height: 20px;
   margin: 5px;
 }
+
+.dropdown-menu {         
+  max-height: 300px;
+  overflow-y: auto;
+}

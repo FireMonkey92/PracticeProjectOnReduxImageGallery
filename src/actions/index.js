@@ -8,6 +8,7 @@
 const github = 'https://my-json-server.typicode.com/FireMonkey92/PracticeProjectOnReduxImageGallery/imageIndexs';
 
 // const local = 'http://localhost:3004/imageIndexs';
+const localcity = 'http://localhost:3004';
 
 export function getImages() {
     //do a network call
@@ -55,8 +56,7 @@ export function sortByDisLikeAsc() {
         method: 'GET'
     }).then(res => res.json());
 
-    // console.log(request);
-    //action creator creates an object and sends to each reducers   
+
     return {
         type: 'IMAGE_DETAILS_ASC_DISLIKES',
         payload: request
@@ -74,4 +74,17 @@ export function sortByDisLikeDesc() {
         type: 'IMAGE_DETAILS_DESC_DISLIKES',
         payload: request
     }
+}
+
+
+
+export function getAllCountries() {
+    const request = fetch(`${localcity}/countryIndexs`, {
+        method: 'GET',
+    }).then(response => response.json());
+    return {
+        type: 'GET_COUNTRIES_DETAILS',
+        payload: request
+    }
+
 }
